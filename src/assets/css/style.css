@@ -1,0 +1,19 @@
+section {
+    border: 1px solid black;
+    padding: 8px;
+    margin: 8px;
+    border-radius: 8px;
+}
+
+.info-nucleo img {
+    width: 30px;
+}   
+ 
+.info-nucleo a {
+    color:#4d8951;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+}
