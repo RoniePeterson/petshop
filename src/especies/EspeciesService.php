@@ -13,13 +13,7 @@ class EspeciesService
 
     public function listAll()
     {
-        $resultado = $this->dao->listAll();
-        if ($resultado == false) {
-            return [
-                "data" => "Erro ao ler as informações. Tente mais tarde."
-            ];
-        }
-        return $resultado;
+        return $this->dao->listAll();
     }
 
     public function listOne($dado)

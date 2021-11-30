@@ -9,32 +9,52 @@ class EspeciesDAO
         try {
             $dbh = DB::getInstance();
 
-            $sql = "Select * from `petshop_db`.`especies`";
+            $query = "
+              SELECT * FROM `petshop_db`.`especies`
+              ORDER BY EspecieNome
+            ";
 
-            $sth = $dbh->query($sql, PDO::FETCH_ASSOC);
+            $result = $dbh->query($query, PDO::FETCH_ASSOC);
 
-            return $sth->fetchAll();
+            return [
+              "error" => FALSE,
+              "data" => $result->fetchAll()
+            ];
 
         } catch (PDOException $e) {
-            return "Error!: " . $e->getMessage() . "<br/>";
+            return [
+              "error" => TRUE,
+              "data: " . $e->getMessage()
+            ];
         }
     }
 
-    public function listOne($dado)
+    public function getByID(int $id)
     {
         try {
-            $dbh = DB::getInstance();
+          $dbh = DB::getInstance();
 
-            $sql = "Select * from tabela where nome_completo like :dado OR numero_cpf like :dado2 ORDER BY data_criacao desc";
-            $stmt = $dbh->prepare($sql);
-            $data = strval($dado);
-            $stmt->bindValue(":dado", $data . "%");
-            $stmt->bindValue(":dado2", $data . "%");
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return  $result;
+          $data = array(
+            ":EspecieID"=> $id
+          );
+
+          $query = "
+            SELECT * FROM `petshop_db`.`especies`
+            WHERE EspecieID = :EspecieID
+          ";
+
+          $statement = $dbh->prepare($query);
+          $statement->execute($data);
+
+          return [
+            "error" => FALSE,
+            "data" => $statement->fetchAll()
+          ];
         } catch (PDOException $e) {
-            return "Error!: " . $e->getMessage() . "<br/>";
+          return [
+            "error" => TRUE,
+            "data: " . $e->getMessage()
+          ];
         }
     }
 

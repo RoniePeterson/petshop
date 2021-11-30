@@ -1,18 +1,21 @@
 <?php
 // session_start();
-require_once('./EspeciesService.php');
+require_once('./EspeciesDAO.php');
 
 class EspeciesController {
 
-  private $service;
+  private $dao;
 
   public function __construct()
   {
-    $this->service = new EspeciesService();
+    $this->dao = new EspeciesDAO();
   }
 
   public function listAll() {
-    var_dump($this->service->listAll());
+    return $this->dao->listAll();
+  }
 
+  public function getByID(int $id) {
+    return $this->dao->getById($id);
   }
 }
